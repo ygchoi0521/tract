@@ -24,7 +24,9 @@ case "$PLATFORM" in
         rustup target add $RUSTC_TRIPLE
         export TARGET_CC=aarch64-linux-gnu-gcc-4.8
         export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc-4.8
-        export BLIS_SRC_ARCH_OVERRIDE=cortexa57
+        export BLIS_SRC_GIT_URL=https://github.com/kali/blis
+        export BLIS_SRC_GIT_BRANCH=arm32vfp
+        export BLIS_SRC_ARCH_OVERRIDE=cortexa53
         export BLIS_SRC_OVERRIDE_STATIC=1
         (cd cli; cargo build --target $RUSTC_TRIPLE --release --features blis)
     ;;
