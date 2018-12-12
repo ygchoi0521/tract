@@ -24,7 +24,9 @@ case "$PLATFORM" in
         rustup target add $RUSTC_TRIPLE
         export TARGET_CC=aarch64-linux-gnu-gcc-4.8
         export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc-4.8
-        cargo build --target $RUSTC_TRIPLE --release -p tract
+        export BLIS_SRC_ARCH_OVERRIDE=cortexa57
+        export BLIS_SRC_OVERRIDE_STATIC=1
+        cargo build --target $RUSTC_TRIPLE --release -p tract --features blis
     ;;
     *)
 esac
