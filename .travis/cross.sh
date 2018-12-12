@@ -26,7 +26,7 @@ case "$PLATFORM" in
         export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc-4.8
         export BLIS_SRC_ARCH_OVERRIDE=cortexa57
         export BLIS_SRC_OVERRIDE_STATIC=1
-        cargo build --target $RUSTC_TRIPLE --release -p tract --features tract/blis
+        (cd cli; cargo build --target $RUSTC_TRIPLE --release --features blis)
     ;;
     *)
 esac
