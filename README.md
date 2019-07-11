@@ -12,12 +12,16 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 
 ### TODO
 
+* binary input
+* establish an AM RTF bench
 * declutter kaldi LSTM into scan + small pieces
-* propagate downsample upstream
-* make Scan pulse aware
-* discover concat/slice optimisation, (kaldi ops never use multiple inputs)
+* propagate Downsample Op upstream
+* make Scan (and whatever else) pulse aware (-> stateful)
+* optimize scan (codegen stage to generate plan)
+* discover and apply concat/slice optimisation
+* improve mat*vec product (i presume LSTM will generate lots of them)
 
-### Generalizations
+### Nice to have generalizations
 
 * declutter ONNX black box recs and maybe TF LSTM to Scan + small pieces
 * should Scan be rewritten in terms of Loop, Alloc, View, Assign ?
