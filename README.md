@@ -6,11 +6,7 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 
 ## Goal: Kaldi acoustic model runner
 
-### Done
-
-* 2019-07-11 We have a bunch of unit tests passing.
-
-### TODO
+### Backlog: TODO
 
 * binary input
 * establish an AM RTF bench
@@ -20,8 +16,30 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 * optimize scan (codegen stage to generate plan)
 * discover and apply concat/slice optimisation
 * improve mat*vec product (i presume LSTM will generate lots of them)
+* put test and benches in CI
+* support inner networks profiling
 
-### Nice to have generalizations
+### Backlog: nice to have
 
+* type the "incorporate" behaviour
 * declutter ONNX black box recs and maybe TF LSTM to Scan + small pieces
 * should Scan be rewritten in terms of Loop, Alloc, View, Assign ?
+* optimize arithmetic noop (+0, *1 to generalize peepholes lstm op drops)
+
+### Done
+
+* 2019-07-11 We have a bunch of unit tests passing.
+
+## Goal: refactor linalg kernels
+
+* matmul and conv kernels in the shape of:
+    * one linear stage (input + fma)
+    * one intermediary stage (row bias or col bias, scale, clipt , transpose)
+    * recombine and store
+
+* first input is constant, and "packed"
+
+* addressing for second input and output could be
+    * row major or col major (one stride is 1)
+    * two arbitrary stides
+    * top value plus row offset (as the current direct conv)
