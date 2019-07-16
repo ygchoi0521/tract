@@ -8,7 +8,6 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 
 ### Backlog: TODO
 
-* binary input
 * establish an AM RTF bench
 * declutter kaldi LSTM into scan + small pieces
 * propagate Downsample Op upstream
@@ -17,7 +16,7 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 * discover and apply concat/slice optimisation
 * improve mat*vec product (i presume LSTM will generate lots of them)
 * put test and benches in CI
-* support inner networks profiling
+* support inner networks profiling (dump done)
 
 ### Backlog: nice to have
 
@@ -29,6 +28,8 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 ### Done
 
 * 2019-07-11 We have a bunch of unit tests passing.
+* 2019-07-15 Refactored core to be able to manipulate models with commong api. Made dump recursive.
+* 2019-07-16 kaldi binary input
 
 ## Goal: refactor linalg kernels
 
