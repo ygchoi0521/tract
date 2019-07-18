@@ -4,7 +4,7 @@ This branch holds my notes, not code.
 
 These are personal notes, take everything here with a grain of salt. -- Kali
 
-## Goal: Kaldi acoustic model runner
+## Epic: Kaldi acoustic model runner
 
 ### Backlog: TODO
 
@@ -31,7 +31,12 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 * 2019-07-15 Refactored core to be able to manipulate models with commong api. Made dump recursive.
 * 2019-07-16 kaldi binary input
 
-## Goal: refactor linalg kernels
+## Epic: Kaldi acoustic model runner, quantized
+
+* maybe start by f16, optimized on armv8 simd
+*
+
+## Epic: refactor linalg kernels
 
 * matmul and conv kernels in the shape of:
     * one linear stage (input + fma)
@@ -44,3 +49,18 @@ These are personal notes, take everything here with a grain of salt. -- Kali
     * row major or col major (one stride is 1)
     * two arbitrary stides
     * top value plus row offset (as the current direct conv)
+
+## Onnx
+
+* convert LSTM and GRU to scan
+* address the dynamic tensors issue
+
+## Tensorflow
+
+* Convert LSTM to scan (the deepspeech form)
+
+## Core improvements
+
+* draft a uniform, typed, declutterred operator set (and type it ?)
+* Consecutive reshaping must go
+* noop reshaping must go
