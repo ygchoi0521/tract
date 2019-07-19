@@ -12,11 +12,10 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 * declutter kaldi LSTM into scan + small pieces
 * propagate Downsample Op upstream
 * make Scan (and whatever else) pulse aware (-> stateful)
-* optimize scan (codegen stage to generate plan)
 * discover and apply concat/slice optimisation
 * improve mat*vec product (i presume LSTM will generate lots of them)
-* put test and benches in CI
-* support inner networks profiling (dump done)
+* put test in CI
+* support inner networks profiling
 
 ### Backlog: nice to have
 
@@ -28,8 +27,11 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 ### Done
 
 * 2019-07-11 We have a bunch of unit tests passing.
+
 * 2019-07-15 Refactored core to be able to manipulate models with commong api. Made dump recursive.
 * 2019-07-16 kaldi binary input
+* 2019-07-18 CI librispeech model
+* 2019-07-19 plug regular optimisation into scan
 
 ## Epic: Kaldi acoustic model runner, quantized
 
