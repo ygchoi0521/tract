@@ -32,6 +32,7 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 * 2019-07-16 kaldi binary input
 * 2019-07-18 CI librispeech model
 * 2019-07-19 plug regular optimisation into scan
+* 2019-07-19 raspi3 bench, bactch mode 560ms for 2600 ms of signal :)
 
 ## Epic: Kaldi acoustic model runner, quantized
 
