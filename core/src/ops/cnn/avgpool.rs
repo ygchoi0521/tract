@@ -1,6 +1,6 @@
 use crate::internal::*;
 use ndarray::prelude::*;
-use num_traits::{AsPrimitive, Float};
+use num_traits::Float;
 use std::iter::Sum;
 
 use crate::ops::cnn::pools::PoolSpec;
@@ -8,6 +8,8 @@ use crate::ops::cnn::Patch;
 use crate::ops::nn::DataShape;
 
 // TODO check why AvgPool need to be typed
+
+interfaces!(AvgPool: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct AvgPool {
@@ -20,8 +22,6 @@ impl AvgPool {
         &self,
         input_shape: &[usize],
     ) -> TractResult<Box<dyn TypedOp>>
-    where
-        usize: AsPrimitive<T>,
     {
         let (input_shape, patch, output_shape) = self.pool_spec.compute_geo(input_shape);
         let op = AvgPoolFixed::<T>::new(patch, input_shape, output_shape, self.count_include_pad);
@@ -98,11 +98,10 @@ impl TypedOp for AvgPool {
     }
 }
 
+interfaces!(<T: Datum + Float + Sum> AvgPoolFixed<T>: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
-pub struct AvgPoolFixed<T: Datum + Float + Sum>
-where
-    usize: AsPrimitive<T>,
-{
+pub struct AvgPoolFixed<T: Datum + Float + Sum> {
     patch: Patch,
     input_shape: DataShape,
     output_shape: DataShape,
@@ -110,10 +109,7 @@ where
     _casper: PhantomData<T>,
 }
 
-impl<T: Datum + Float + Sum> Op for AvgPoolFixed<T>
-where
-    usize: AsPrimitive<T>,
-{
+impl<T: Datum + Float + Sum> Op for AvgPoolFixed<T> {
     fn name(&self) -> Cow<str> {
         format!("AvgPool::Fixed<{:?}>", T::datum_type()).into()
     }
@@ -121,10 +117,7 @@ where
     op_as_typed_op!();
 }
 
-impl<T: Datum + Float + Sum> StatelessOp for AvgPoolFixed<T>
-where
-    usize: AsPrimitive<T>,
-{
+impl<T: Datum + Float + Sum> StatelessOp for AvgPoolFixed<T> {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
         let input: ArrayViewD<T> = input.to_array_view()?;
@@ -162,8 +155,6 @@ where
 }
 
 impl<T: Datum + Float + Sum> TypedOp for AvgPoolFixed<T>
-where
-    usize: AsPrimitive<T>,
 {
     typed_op_as_op!();
 

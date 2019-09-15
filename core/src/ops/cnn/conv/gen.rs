@@ -7,6 +7,8 @@ use crate::ops::cnn::PaddingSpec;
 use crate::ops::nn::DataFormat;
 use std::borrow::Borrow;
 
+interfaces!(Conv: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Conv {
     pub data_format: DataFormat,

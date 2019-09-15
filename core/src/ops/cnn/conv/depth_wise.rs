@@ -4,6 +4,13 @@ use crate::ops::nn::DataShape;
 use ndarray::*;
 use std::iter::Sum;
 
+use std::ops::AddAssign;
+use ndarray::LinalgScalar;
+
+interfaces!(
+    <T: Datum + Clone + LinalgScalar + AddAssign + PartialEq + Sum> DepthWise<T>: dyn TypedOp
+);
+
 #[derive(Debug, Clone, new)]
 pub struct DepthWise<T>
 where

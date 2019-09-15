@@ -9,6 +9,8 @@ pub trait UnaryMiniOp: fmt::Debug + objekt::Clone + Send + Sync + 'static + Down
 clone_trait_object!(UnaryMiniOp);
 downcast_rs::impl_downcast!(UnaryMiniOp);
 
+interfaces!(UnaryOp: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone)]
 pub struct UnaryOp(pub Box<dyn UnaryMiniOp>);
 

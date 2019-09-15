@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Identity: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, Default)]
 pub struct Identity;
 

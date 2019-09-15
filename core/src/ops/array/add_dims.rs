@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(AddDims: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct AddDims {
     pub axes: Vec<usize>,

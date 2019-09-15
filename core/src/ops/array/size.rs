@@ -2,6 +2,8 @@ use num_traits::AsPrimitive;
 
 use crate::internal::*;
 
+interfaces!(Size: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Size {
     dt: DatumType,

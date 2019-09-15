@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::prelude::*;
 
+interfaces!(<D: DimLike + ToDim> Slice<D>: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Slice<D: DimLike + ToDim> {
     pub axis: usize,

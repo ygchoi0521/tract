@@ -3,6 +3,8 @@ use crate::ops::nn::DataShape;
 use ndarray::prelude::*;
 use tract_linalg::mmm::*;
 
+interfaces!(Direct: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Direct {
     tile: Box<dyn MatMatMul<f32>>,

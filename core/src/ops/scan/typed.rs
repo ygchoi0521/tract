@@ -2,6 +2,8 @@ use super::codegen::Codegen;
 
 use super::*;
 
+interfaces!(Typed: dyn TypedOp);
+
 #[derive(Debug, Clone, Default)]
 pub struct Typed {
     pub skip: usize,

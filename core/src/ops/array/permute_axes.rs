@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(PermuteAxes: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct PermuteAxes {
     pub axes: Option<Vec<usize>>,

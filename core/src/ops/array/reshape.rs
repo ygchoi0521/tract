@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Reshape: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Reshape {}
 

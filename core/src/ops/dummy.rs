@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Dummy: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Dummy;
 

@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Crop: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Crop {
     pub axis: usize,

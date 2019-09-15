@@ -3,6 +3,8 @@ use num_traits::AsPrimitive;
 
 use crate::internal::*;
 
+interfaces!(Shape: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Shape {
     dt: DatumType,

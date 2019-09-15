@@ -1,6 +1,8 @@
 use crate::internal::*;
 use itertools::Itertools;
 
+interfaces!(IntoShape: dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct IntoShape {
     shape: TVec<usize>,

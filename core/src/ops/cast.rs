@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Cast: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Cast {
     to: DatumType,

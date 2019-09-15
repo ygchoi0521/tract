@@ -57,6 +57,8 @@ impl OpState for DelayState {
     }
 }
 
+interfaces!(Delay: dyn TypedOp);
+
 #[derive(Clone, Debug, new, PartialEq)]
 pub struct Delay {
     input_fact: PulsedTensorFact,

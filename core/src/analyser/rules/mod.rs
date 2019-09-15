@@ -63,7 +63,7 @@ pub trait InferenceRulesOp {
     }
 }
 
-impl<O: InferenceRulesOp + Op> crate::ops::InferenceOp for O {
+impl<O: InferenceRulesOp + Op + std::fmt::Debug> crate::ops::InferenceOp for O {
     fn infer_facts(
         &mut self,
         inputs: TVec<&TensorFact>,

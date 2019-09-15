@@ -15,6 +15,8 @@ impl Default for PadMode {
     }
 }
 
+interfaces!(Pad: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Pad {
     pads: Vec<(usize, usize)>,
@@ -280,6 +282,7 @@ impl<T: Datum + Copy> OpState for PulsePadOpState<T> {
     }
 }
 
+interfaces!(<T: Datum + Copy> PulsePad<T>: dyn InferenceOp, dyn TypedOp);
 #[derive(Debug, Clone, Default, new)]
 struct PulsePad<T: Datum + Copy> {
     axis: usize,

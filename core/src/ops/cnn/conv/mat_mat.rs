@@ -1,4 +1,4 @@
-use num_traits::{AsPrimitive, Zero};
+use num_traits::Zero;
 use std::ops::{Add, AddAssign, Mul};
 
 use crate::internal::*;
@@ -36,11 +36,12 @@ use tract_linalg::frame::mmm::{FusedSpec, MatMatMul};
  *              +--------------+  +----------------+
  */
 
+interfaces!(<T: Datum + Add + Mul + Zero + Copy> MatMat<T>: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct MatMat<T>
 where
     T: Datum + Add + Mul + Zero + Copy,
-    f32: AsPrimitive<T>,
 {
     pub patch: Patch,
     pub output_shape: DataShape,
@@ -57,7 +58,6 @@ where
 impl<T> MatMat<T>
 where
     T: Datum + Add + Mul + Zero + Copy + AddAssign + ndarray::LinalgScalar,
-    f32: AsPrimitive<T>,
 {
     pub(super) fn conv_gemm<'i>(
         &'i self,
@@ -103,7 +103,6 @@ where
 impl<T> Op for MatMat<T>
 where
     T: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<T> + PartialEq,
-    f32: AsPrimitive<T>,
 {
     fn name(&self) -> Cow<str> {
         "MatMat".into()
@@ -143,14 +142,15 @@ where
                     }
                 } else if let Some(op) = succ.op_as::<ops::unary::UnaryOp>() {
                     if let Some(op) = op.0.downcast_ref::<ops::math::ScalarMax>() {
-                        return Ok(Some(tvec!(FusedSpec::Max(op.max.as_()))));
+                        let max = *tensor0(op.max).cast_to::<T>()?.to_scalar::<T>()?;
+                        return Ok(Some(tvec!(FusedSpec::Max(max))));
                     } else if let Some(op) = op.0.downcast_ref::<ops::math::ScalarMin>() {
-                        return Ok(Some(tvec!(FusedSpec::Min(op.min.as_()))));
+                        let min = *tensor0(op.min).cast_to::<T>()?.to_scalar::<T>()?;
+                        return Ok(Some(tvec!(FusedSpec::Min(min))));
                     } else if let Some(op) = op.0.downcast_ref::<ops::math::ScalarMinMax>() {
-                        return Ok(Some(tvec!(
-                            FusedSpec::Min(op.min.as_()),
-                            FusedSpec::Max(op.max.as_()),
-                        )));
+                        let max = *tensor0(op.max).cast_to::<T>()?.to_scalar::<T>()?;
+                        let min = *tensor0(op.min).cast_to::<T>()?.to_scalar::<T>()?;
+                        return Ok(Some(tvec!(FusedSpec::Min(min), FusedSpec::Max(max))));
                     }
                 }
                 Ok(None)
@@ -173,7 +173,6 @@ where
 impl<T> StatelessOp for MatMat<T>
 where
     T: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<T> + PartialEq,
-    f32: AsPrimitive<T>,
 {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
@@ -185,7 +184,6 @@ where
 impl<T> TypedOp for MatMat<T>
 where
     T: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<T> + PartialEq,
-    f32: AsPrimitive<T>,
 {
     typed_op_as_op!();
 

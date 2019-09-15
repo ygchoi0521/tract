@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::prelude::*;
 
+interfaces!(GlobalAvgPool: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct GlobalAvgPool {
     //    data_is_nhwc: bool, // default is nchw (onnx)
@@ -64,6 +66,8 @@ impl TypedOp for GlobalAvgPool {
         output_facts(inputs)
     }
 }
+
+interfaces!(GlobalLpPool: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct GlobalLpPool {
@@ -133,6 +137,8 @@ impl TypedOp for GlobalLpPool {
         output_facts(inputs)
     }
 }
+
+interfaces!(GlobalMaxPool: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct GlobalMaxPool {

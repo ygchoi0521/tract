@@ -1,5 +1,6 @@
 use crate::internal::*;
 
+interfaces!(MultiBroadcastTo: dyn InferenceOp);
 #[derive(Debug, Clone, new, Default)]
 pub struct MultiBroadcastTo;
 
@@ -62,6 +63,8 @@ impl InferenceRulesOp for MultiBroadcastTo {
 
     inference_op_as_op!();
 }
+
+interfaces!(TypedMultiBroadcastTo: dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct TypedMultiBroadcastTo {

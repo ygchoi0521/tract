@@ -1,5 +1,7 @@
 use super::*;
 
+interfaces!(Inference: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Inference {
     pub body: InferenceModel,

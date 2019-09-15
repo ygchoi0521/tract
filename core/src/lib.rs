@@ -69,6 +69,8 @@ extern crate maplit;
 extern crate no_panic;
 #[macro_use]
 extern crate objekt;
+#[macro_use]
+extern crate query_interface;
 #[cfg(test)]
 extern crate env_logger;
 #[cfg(test)]

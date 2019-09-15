@@ -9,6 +9,8 @@ use crate::ops::nn::DataShape;
 use num_traits::Zero;
 use std::ops::Mul;
 
+interfaces!(<T: Copy + Datum + Mul + Zero> Im2Col<T>: dyn TypedOp);
+
 #[derive(Debug, Clone)]
 pub struct Im2Col<T: Copy + Datum + Mul + Zero> {
     pub patch: Patch,

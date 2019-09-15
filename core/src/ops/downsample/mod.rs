@@ -6,6 +6,8 @@ mod array;
 mod conv;
 mod scan;
 
+interfaces!(Downsample: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default, PartialEq)]
 pub struct Downsample {
     axis: usize,

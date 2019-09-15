@@ -2,6 +2,8 @@ use crate::internal::*;
 use ndarray::*;
 use num_traits::AsPrimitive;
 
+interfaces!(ConstantLike: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct ConstantLike {
     value: f32,
@@ -67,6 +69,8 @@ impl TypedOp for ConstantLike {
         Ok(tvec!(inputs[0].clone()))
     }
 }
+
+interfaces!(EyeLike: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct EyeLike {

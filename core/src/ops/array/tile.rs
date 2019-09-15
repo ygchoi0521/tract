@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::*;
 
+interfaces!(Tile: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Tile;
 
@@ -78,6 +80,8 @@ impl InferenceRulesOp for Tile {
 
     inference_op_as_op!();
 }
+
+interfaces!(TypedTile: dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct TypedTile {

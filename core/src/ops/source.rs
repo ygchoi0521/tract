@@ -14,6 +14,8 @@ impl OpState for SourceState {
     }
 }
 
+interfaces!(Source: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Source;
 
@@ -65,6 +67,8 @@ impl InferenceRulesOp for Source {
         }
     }
 }
+
+interfaces!(TypedSource: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct TypedSource {

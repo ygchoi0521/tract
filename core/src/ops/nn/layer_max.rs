@@ -1,5 +1,8 @@
 use crate::internal::*;
 
+
+interfaces!(LayerHardmax: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct LayerHardmax {
     axis: isize,
@@ -85,6 +88,8 @@ impl TypedOp for LayerHardmax {
     }
 }
 
+interfaces!(LayerLogSoftmax: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct LayerLogSoftmax {
     axis: isize,
@@ -166,6 +171,8 @@ impl TypedOp for LayerLogSoftmax {
         pulsify(self, self.axis, node, target, mapping)
     }
 }
+
+interfaces!(LayerSoftmax: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct LayerSoftmax {

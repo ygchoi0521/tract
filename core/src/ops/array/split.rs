@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::*;
 
+interfaces!(Split: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Split {
     axis: usize,

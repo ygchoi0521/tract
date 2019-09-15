@@ -6,6 +6,8 @@ use crate::ops::cnn::pools::PoolSpec;
 use crate::ops::cnn::Patch;
 use crate::ops::nn::DataShape;
 
+interfaces!(MaxPool: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct MaxPool {
     pool_spec: PoolSpec,
@@ -101,6 +103,8 @@ impl TypedOp for MaxPool {
         self.pool_spec.pulsify(source, node, target, mapping)
     }
 }
+
+interfaces!(<T: Datum + Float> MaxPoolFixed<T>: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct MaxPoolFixed<T: Datum + Float> {

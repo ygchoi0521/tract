@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::*;
 
+interfaces!(ArgMaxMin: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct ArgMaxMin {
     max: bool,

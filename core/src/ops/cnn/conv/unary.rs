@@ -16,6 +16,8 @@ use crate::ops::nn::DataFormat;
 
 use std::iter::Sum;
 
+interfaces!(ConvUnary: dyn TypedOp);
+
 #[derive(Debug, Clone)]
 pub struct ConvUnary {
     pub data_format: DataFormat,

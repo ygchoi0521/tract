@@ -2,6 +2,8 @@ use ndarray::*;
 
 use super::*;
 
+interfaces!(Codegen: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Codegen {
     pub skip: usize,

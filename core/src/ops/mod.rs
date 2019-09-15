@@ -121,8 +121,10 @@ where
     ) -> TractResult<TVec<OutletId>>;
 }
 
+query_interface::mopo!(dyn Op);
+
 /// A base operation
-pub trait Op: fmt::Debug + objekt::Clone + Send + Sync + 'static + Downcast + StatefullOp {
+pub trait Op: objekt::Clone + Send + Sync + 'static + Downcast + StatefullOp + query_interface::Object {
     fn name(&self) -> Cow<str>;
 
     /// Early pass on inference model, after analyse, but before translation to
@@ -199,7 +201,7 @@ pub trait Op: fmt::Debug + objekt::Clone + Send + Sync + 'static + Downcast + St
         Ok(vec![])
     }
 
-    fn as_typed(&self) -> Option<&dyn TypedOp>;
+fn as_typed(&self) -> Option<&dyn TypedOp>;
 
     fn is_canonic(&self) -> bool {
         false
@@ -383,7 +385,6 @@ impl crate::ops::Translate<TensorFact, Box<dyn InferenceOp>, TypedTensorInfo, Bo
 
 impl_downcast!(Op);
 
-clone_trait_object!(Op);
 clone_trait_object!(StatelessOp);
 clone_trait_object!(TypedOp);
 clone_trait_object!(InferenceOp);

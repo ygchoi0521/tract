@@ -4,6 +4,8 @@ use crate::internal::*;
 use crate::pulse::delay::Delay;
 use std::ops::Range;
 
+interfaces!(Concat: dyn InferenceOp, dyn TypedOp);
+
 /// Concat: high level concat op
 #[derive(Debug, Clone, new)]
 pub struct Concat {
@@ -152,6 +154,7 @@ impl TypedOp for Concat {
     }
 }
 
+
 /// NormConcatSlice: fully decluttered Concat equivalent
 #[derive(Debug, Clone)]
 pub enum NormConcatSlice {
@@ -174,6 +177,8 @@ impl NormConcatSlice {
         }
     }
 }
+
+interfaces!(NormConcat: dyn TypedOp);
 
 #[derive(new, Debug, Clone)]
 pub struct NormConcat {
@@ -426,6 +431,8 @@ pub fn overwrite_part_of_pulse<T: Datum>(
     }
 }
 
+interfaces!(<T:Datum> PulsedSameAxisConcat<T>: dyn TypedOp);
+
 /// Concat with pulse along concat axis
 #[derive(new, Debug, Clone)]
 pub struct PulsedSameAxisConcat<T: Datum> {
@@ -556,6 +563,8 @@ fn slices<'a, T: Datum>(
     }
     Ok(mats)
 }
+
+interfaces!(<T:Datum> FixedConcat<T>: dyn TypedOp);
 
 #[derive(new, Debug, Clone)]
 pub struct FixedConcat<T: Datum> {

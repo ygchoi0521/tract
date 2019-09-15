@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::*;
 
+interfaces!(Gather: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Gather {
     axis: i64,

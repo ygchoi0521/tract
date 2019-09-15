@@ -1,4 +1,4 @@
-use num_traits::{AsPrimitive, Zero};
+use num_traits::Zero;
 use std::ops::{Add, Mul};
 
 use crate::internal::*;
@@ -197,6 +197,8 @@ impl<T: Copy + Datum + Add + Mul + Zero + FloatLike> Geo<T> {
     }
 }
 
+interfaces!(MatMul: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct MatMul {
     a_trans: bool,
@@ -307,6 +309,8 @@ impl TypedOp for MatMul {
         )?))
     }
 }
+
+interfaces!(MatMulUnary: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct MatMulUnary {
@@ -438,11 +442,12 @@ impl TypedOp for MatMulUnary {
     }
 }
 
+interfaces!(<T: Copy + Datum + Add + Mul + Zero + FloatLike> MatMulUnaryFinite<T>: dyn TypedOp);
+
 #[derive(Debug, Clone)]
 pub struct MatMulUnaryFinite<T>
 where
     T: Copy + Datum + Add + Mul + Zero + FloatLike,
-    f32: ::num_traits::AsPrimitive<T>,
 {
     packed_as: ArrayD<Tensor>,
     geo: Geo<T>,
@@ -458,7 +463,6 @@ fn new_mat_mul_unary_finite<T>(
 ) -> TractResult<Box<dyn TypedOp>>
 where
     T: Copy + Datum + Add + Mul + Zero + FloatLike,
-    f32: ::num_traits::AsPrimitive<T>,
 {
     let geo = Geo::<T>::new(a.shape(), b_shape, a_trans, b_trans, c_trans)?;
     let a = a.to_array_view::<T>()?;
@@ -489,7 +493,6 @@ where
 impl<T> Op for MatMulUnaryFinite<T>
 where
     T: Copy + Datum + Add + Mul + Zero + FloatLike,
-    f32: AsPrimitive<T>,
 {
     fn name(&self) -> Cow<str> {
         "MatMulUnaryFinite".into()
@@ -524,14 +527,15 @@ where
                     }
                 } else if let Some(op) = succ.op_as::<ops::unary::UnaryOp>() {
                     if let Some(op) = op.0.downcast_ref::<ops::math::ScalarMax>() {
-                        return Ok(Some(tvec!(FusedSpec::Max(op.max.as_()))));
+                        let max = *tensor0(op.max).cast_to::<T>()?.to_scalar::<T>()?;
+                        return Ok(Some(tvec!(FusedSpec::Max(max))));
                     } else if let Some(op) = op.0.downcast_ref::<ops::math::ScalarMin>() {
-                        return Ok(Some(tvec!(FusedSpec::Min(op.min.as_()))));
+                        let min = *tensor0(op.min).cast_to::<T>()?.to_scalar::<T>()?;
+                        return Ok(Some(tvec!(FusedSpec::Min(min))));
                     } else if let Some(op) = op.0.downcast_ref::<ops::math::ScalarMinMax>() {
-                        return Ok(Some(tvec!(
-                            FusedSpec::Min(op.min.as_()),
-                            FusedSpec::Max(op.max.as_()),
-                        )));
+                        let max = *tensor0(op.max).cast_to::<T>()?.to_scalar::<T>()?;
+                        let min = *tensor0(op.min).cast_to::<T>()?.to_scalar::<T>()?;
+                        return Ok(Some(tvec!(FusedSpec::Min(min), FusedSpec::Max(max))));
                     }
                 }
                 Ok(None)
@@ -555,7 +559,6 @@ where
 impl<T> StatelessOp for MatMulUnaryFinite<T>
 where
     T: Copy + Datum + Add + Mul + Zero + FloatLike,
-    f32: ::num_traits::AsPrimitive<T>,
 {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let b = args_1!(inputs);
@@ -641,7 +644,6 @@ where
 impl<T> TypedOp for MatMulUnaryFinite<T>
 where
     T: Copy + Datum + Add + Mul + Zero + FloatLike,
-    f32: ::num_traits::AsPrimitive<T>,
 {
     typed_op_as_op!();
 

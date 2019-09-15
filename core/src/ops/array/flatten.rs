@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Flatten: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Flatten {
     axis: usize,

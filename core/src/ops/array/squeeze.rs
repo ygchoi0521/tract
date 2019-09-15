@@ -2,6 +2,8 @@ use crate::internal::*;
 
 use super::RmDims;
 
+interfaces!(Squeeze: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Squeeze {
     axes: Option<Vec<usize>>,

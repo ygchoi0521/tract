@@ -1,5 +1,7 @@
 use crate::internal::*;
 
+interfaces!(Const: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Const {
     value: Arc<Tensor>,

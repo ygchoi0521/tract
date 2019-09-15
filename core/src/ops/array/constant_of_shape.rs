@@ -2,6 +2,8 @@ use ndarray::*;
 
 use crate::internal::*;
 
+interfaces!(ConstantOfShape: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct ConstantOfShape {
     scalar: Arc<Tensor>,

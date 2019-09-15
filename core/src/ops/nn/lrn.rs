@@ -1,6 +1,8 @@
 use crate::internal::*;
 use ndarray::prelude::*;
 
+interfaces!(Lrn: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Lrn {
     alpha: f32,

@@ -10,6 +10,8 @@ use crate::ops::nn::{DataFormat, DataShape};
 
 use tract_linalg::vecmatmul::VecMatMul;
 
+interfaces!(<T: Datum + Add + Mul + Zero + Copy> VecMat<T>: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct VecMat<T>
 where

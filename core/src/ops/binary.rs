@@ -29,8 +29,11 @@ pub trait BinMiniOp: fmt::Debug + objekt::Clone + Send + Sync + 'static + Downca
     }
     fn unary_with_b_const(&self, b: &Arc<Tensor>) -> Option<UnaryOp>;
 }
+
 clone_trait_object!(BinMiniOp);
 downcast_rs::impl_downcast!(BinMiniOp);
+
+interfaces!(InferenceBinOp: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone)]
 pub struct InferenceBinOp(pub Box<dyn BinMiniOp>);
@@ -131,6 +134,8 @@ impl TypedOp for InferenceBinOp {
     }
 }
 
+interfaces!(Nary: dyn InferenceOp);
+
 #[derive(Debug, Clone)]
 pub struct Nary(pub Box<dyn BinMiniOp>, pub bool);
 
@@ -228,6 +233,8 @@ impl InferenceRulesOp for Nary {
 
     inference_op_as_op!();
 }
+
+interfaces!(TypedBinOp: dyn TypedOp);
 
 #[derive(Debug, Clone)]
 pub struct TypedBinOp(pub Box<dyn BinMiniOp>);
@@ -372,6 +379,8 @@ impl TypedOp for TypedBinOp {
     }
 }
 
+interfaces!(UnaryOp: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct UnaryOp {
     pub mini_op: Box<dyn BinMiniOp>,
@@ -464,6 +473,8 @@ impl TypedOp for UnaryOp {
         Ok(tvec!(OutletId::new(id, 0)))
     }
 }
+
+interfaces!(MergeOp: dyn TypedOp);
 
 #[derive(Debug, Clone)]
 pub struct MergeOp(pub Box<dyn BinMiniOp>);
@@ -562,6 +573,8 @@ impl TypedOp for MergeOp {
         Ok(tvec!(OutletId::new(id, 0)))
     }
 }
+
+interfaces!(MergeOpUnicast: dyn TypedOp);
 
 #[derive(Debug, Clone)]
 pub struct MergeOpUnicast(pub Box<dyn BinMiniOp>);
