@@ -12,6 +12,8 @@ pub fn block_lstm(_ctx: &ParsingContext, node: &NodeDef) -> TractResult<Box<dyn 
     Ok(Box::new(BlockLSTM::new(forget_bias, cell_clip, t, use_peephole)))
 }
 
+interfaces!(BlockLSTM: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Clone, Debug, new)]
 pub struct BlockLSTM {
     forget_bias: f32,

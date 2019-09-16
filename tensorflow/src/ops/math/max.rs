@@ -3,6 +3,8 @@ use tract_core::internal::*;
 use crate::model::ParsingContext;
 use crate::tfpb::node_def::NodeDef;
 
+interfaces!(Max: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Max {
     t: DatumType,
@@ -118,6 +120,8 @@ impl InferenceRulesOp for Max {
 
     inference_op_as_op!();
 }
+
+interfaces!(TypedMax: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct TypedMax {

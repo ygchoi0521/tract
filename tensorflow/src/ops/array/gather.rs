@@ -5,6 +5,8 @@ use tract_core::internal::*;
 use crate::model::ParsingContext;
 use crate::tfpb::node_def::NodeDef;
 
+interfaces!(GatherNd: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct GatherNd {}
 

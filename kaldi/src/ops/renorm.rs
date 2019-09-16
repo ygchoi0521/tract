@@ -13,6 +13,8 @@ pub fn renorm(ctx: &ParsingContext, name: &str) -> TractResult<Box<dyn Inference
     Ok(Box::new(Renorm::new(rms)))
 }
 
+interfaces!(Renorm: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Clone, Debug, new)]
 struct Renorm {
     target_rms: f32,

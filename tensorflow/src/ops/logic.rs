@@ -21,6 +21,9 @@ fn switch(ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<dyn InferenceOp
     Ok(Box::new(Switch::new(arity)))
 }
 
+
+interfaces!(Switch: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Switch {
     output_arity: usize,
@@ -85,6 +88,8 @@ fn merge(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<dyn InferenceOp
     let inputs = pb.get_attr_int::<i32>("N")?;
     Ok(Box::new(Merge::new(inputs as usize)))
 }
+
+interfaces!(Merge: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct Merge {

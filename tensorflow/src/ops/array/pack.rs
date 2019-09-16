@@ -13,6 +13,8 @@ pub fn pack(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<dyn Inferenc
 
 //TODO: incorporate as Concat
 
+interfaces!(Pack: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Pack {
     t: DatumType,

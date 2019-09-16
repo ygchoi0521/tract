@@ -7,10 +7,13 @@ pub fn build(_ctx: &ParsingContext, _pb: &NodeDef) -> TractResult<Box<dyn Infere
     Ok(Box::new(ExpandDims))
 }
 
+interfaces!(ExpandDims: dyn InferenceOp);
+
 #[derive(Debug, Clone)]
 pub struct ExpandDims;
 
 impl ExpandDims {
+    // TODO: lol
     fn eval_t<T: Datum>(
         &self,
         data: Arc<Tensor>,

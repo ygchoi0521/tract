@@ -6,6 +6,8 @@ use crate::tfpb::node_def::NodeDef;
 
 use tract_core::internal::*;
 
+interfaces!(<T: Copy + Datum + Zero> Pad<T>: dyn InferenceOp);
+
 #[derive(Debug, Clone, Default, new)]
 pub struct Pad<T: Copy + Datum + Zero> {
     _phantom: PhantomData<T>,

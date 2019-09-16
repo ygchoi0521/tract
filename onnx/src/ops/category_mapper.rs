@@ -30,6 +30,8 @@ fn category_mapper(
     Ok((op, vec![]))
 }
 
+interfaces!(<Src: Datum + Hash + Eq, Dst: Datum> CategoryMapper<Src, Dst>: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Clone, new, Debug)]
 struct CategoryMapper<Src: Datum + Hash + Eq, Dst: Datum> {
     hash: HashMap<Src, Dst>,

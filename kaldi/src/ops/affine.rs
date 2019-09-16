@@ -28,6 +28,8 @@ pub fn affine_component(ctx: &ParsingContext, name: &str) -> TractResult<Box<dyn
     }))
 }
 
+interfaces!(Affine: dyn InferenceOp);
+
 #[derive(Clone, Debug, new)]
 struct Affine {
     kernel_len: usize,

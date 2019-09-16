@@ -282,7 +282,7 @@ impl<T: Datum + Copy> OpState for PulsePadOpState<T> {
     }
 }
 
-interfaces!(<T: Datum + Copy> PulsePad<T>: dyn InferenceOp, dyn TypedOp);
+interfaces!(<T: Datum + Copy> PulsePad<T>: dyn TypedOp);
 #[derive(Debug, Clone, Default, new)]
 struct PulsePad<T: Datum + Copy> {
     axis: usize,

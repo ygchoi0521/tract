@@ -17,6 +17,8 @@ pub enum LoopGateRole {
     LoopCond,
 }
 
+interfaces!(LoopGate: dyn InferenceOp);
+
 #[derive(Debug, Clone)]
 pub struct LoopGate(LoopGateRole);
 
@@ -56,6 +58,8 @@ pub enum NextIterationRole {
     Source,
     Sink,
 }
+
+interfaces!(NextIteration: dyn InferenceOp);
 
 #[derive(Debug, Clone, new)]
 pub struct NextIteration {

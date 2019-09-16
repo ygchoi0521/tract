@@ -1,7 +1,7 @@
 use ndarray::prelude::*;
 use tract_core::internal::*;
 
-// TODO declutter to a chain of Slice. no need to be TypedOp anymore
+interfaces!(Slice: dyn InferenceOp);
 
 #[derive(Debug, Clone, new, Default)]
 pub struct Slice {

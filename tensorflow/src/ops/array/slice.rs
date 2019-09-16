@@ -1,5 +1,7 @@
 use tract_core::internal::*;
 
+interfaces!(Slice: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Slice;
 

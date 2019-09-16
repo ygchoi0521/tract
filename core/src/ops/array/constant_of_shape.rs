@@ -2,7 +2,7 @@ use ndarray::*;
 
 use crate::internal::*;
 
-interfaces!(ConstantOfShape: dyn InferenceOp, dyn TypedOp);
+interfaces!(ConstantOfShape: dyn InferenceOp);
 
 #[derive(Debug, Clone, new)]
 pub struct ConstantOfShape {

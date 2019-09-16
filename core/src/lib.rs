@@ -127,9 +127,9 @@ pub mod internal {
     pub use crate::analyser::types::*;
     pub use crate::datum::FloatLike;
     pub use crate::dim::{DimLike, TDim, ToDim};
-    pub use crate::ops::unary::UnaryMiniOp;
     pub use crate::framework::*;
     pub use crate::model::*;
+    pub use crate::ops::unary::UnaryMiniOp;
     pub use crate::ops::{
         check_input_arity, check_output_arity, AxesInfo, AxisInfo, Cost, InferenceOp, Op, OpState,
         StatefullOp, StatelessOp, Validation,
@@ -138,6 +138,7 @@ pub mod internal {
     pub use crate::prelude::*;
     pub use crate::pulse::PulsedModel;
     pub use crate::{args_1, args_2, args_3, args_4};
+    pub use query_interface::{interfaces, vtable_for};
     pub use std::borrow::Cow;
     pub use std::collections::HashMap;
     pub use std::marker::PhantomData;

@@ -1,6 +1,8 @@
 use ndarray::prelude::*;
 use tract_core::internal::*;
 
+interfaces!(SpaceToBatch: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct SpaceToBatch {
     datum_type: DatumType,
@@ -90,6 +92,8 @@ impl InferenceRulesOp for SpaceToBatch {
         }
     }
 }
+
+interfaces!(BatchToSpace: dyn InferenceOp);
 
 #[derive(Debug, Clone, new)]
 pub struct BatchToSpace {

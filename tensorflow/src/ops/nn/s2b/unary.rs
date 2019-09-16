@@ -9,6 +9,8 @@ pub enum PaddingStrat {
     FixedFixed(usize, usize),
 }
 
+interfaces!(SpaceToBatchUnary: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct SpaceToBatchUnary {
     pub datum_type: DatumType,
@@ -94,6 +96,8 @@ impl TypedOp for SpaceToBatchUnary {
         Ok(tvec!(TypedTensorInfo::dt_shape(inputs[0].datum_type, &*self.batch_shape)?))
     }
 }
+
+interfaces!(BatchToSpaceUnary: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct BatchToSpaceUnary {

@@ -11,6 +11,8 @@ pub fn dropout(
     Ok((Box::new(Dropout::new(node.get_output().len() == 2)), vec![]))
 }
 
+interfaces!(Dropout: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Dropout {
     output_mask: bool,

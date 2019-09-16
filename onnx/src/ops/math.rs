@@ -102,6 +102,8 @@ pub fn gemm(
     Ok((Box::new(Gemm::new(alpha, beta, trans_a, trans_b)), vec![]))
 }
 
+interfaces!(Gemm: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Gemm {
     alpha: f32,
@@ -194,6 +196,8 @@ impl InferenceRulesOp for Gemm {
 
     inference_op_as_op!();
 }
+
+interfaces!(IsNan: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Debug, Clone)]
 pub struct IsNan;

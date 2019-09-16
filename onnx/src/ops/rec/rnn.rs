@@ -34,6 +34,8 @@ pub fn rnn(
     Ok((Box::new(rnn), vec![]))
 }
 
+interfaces!(RNN: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct RNN {
     pub optional_bias_input: Option<usize>,

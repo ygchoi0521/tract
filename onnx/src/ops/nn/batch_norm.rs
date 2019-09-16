@@ -3,6 +3,8 @@ use num_traits::AsPrimitive;
 use tract_core::internal::*;
 use tract_core::ops::nn::DataFormat;
 
+interfaces!(BatchNorm: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct BatchNorm {
     data_format: DataFormat,

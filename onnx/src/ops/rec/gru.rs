@@ -34,6 +34,8 @@ pub fn gru(
     Ok((Box::new(gru), vec![]))
 }
 
+interfaces!(GRU: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct GRU {
     pub optional_bias_input: Option<usize>,

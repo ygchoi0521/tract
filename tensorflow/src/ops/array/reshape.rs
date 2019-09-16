@@ -2,15 +2,16 @@ use crate::model::ParsingContext;
 use crate::tfpb::node_def::NodeDef;
 use tract_core::internal::*;
 
-#[derive(Debug, Clone, new)]
-pub struct Reshape<T: Datum>(PhantomData<T>);
+interfaces!(Reshape: dyn InferenceOp);
 
-pub fn reshape(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<dyn InferenceOp>> {
-    let dtype = pb.get_attr_datum_type("T")?;
-    Ok(boxed_new!(Reshape(dtype)()))
+#[derive(Debug, Clone, new)]
+pub struct Reshape;
+
+pub fn reshape(_ctx: &ParsingContext, _pb: &NodeDef) -> TractResult<Box<dyn InferenceOp>> {
+    Ok(Box::new(Reshape))
 }
 
-impl<T: Datum> Op for Reshape<T> {
+impl Op for Reshape {
     fn name(&self) -> Cow<str> {
         "tf.Reshape".into()
     }
@@ -18,18 +19,18 @@ impl<T: Datum> Op for Reshape<T> {
     not_a_typed_op!();
 }
 
-impl<T: Datum> StatelessOp for Reshape<T> {
+impl StatelessOp for Reshape {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let (input, dims) = args_2!(inputs);
 
-        let input = input.into_tensor().into_array::<T>()?;
+        let input = input.into_tensor();
         let dims = true_dims(dims.as_slice::<i32>()?, input.len());
-        let output = input.into_shape(&*dims)?.into_dyn();
+        let output = unsafe { input.into_shape(&*dims)? };
         Ok(tvec![output.into_arc_tensor()])
     }
 }
 
-impl<T: Datum> InferenceRulesOp for Reshape<T> {
+impl InferenceRulesOp for Reshape {
     fn rules<'r, 'p: 'r, 's: 'r>(
         &'s self,
         s: &mut Solver<'r>,
@@ -38,9 +39,8 @@ impl<T: Datum> InferenceRulesOp for Reshape<T> {
     ) -> InferenceResult {
         check_input_arity(&inputs, 2)?;
         check_output_arity(&outputs, 1)?;
-        s.equals(&inputs[0].datum_type, T::datum_type())?;
+        s.equals(&inputs[0].datum_type, &outputs[0].datum_type)?;
         s.equals(&inputs[1].datum_type, DatumType::I32)?;
-        s.equals(&outputs[0].datum_type, T::datum_type())?;
         s.equals(&inputs[1].rank, 1)?;
         s.given_2(&inputs[0].shape, &inputs[1].value, move |solver, shape, dims| {
             let dims = dims.as_slice::<i32>().unwrap(); // checked

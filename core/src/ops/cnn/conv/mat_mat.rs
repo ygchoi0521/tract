@@ -1,8 +1,6 @@
-use num_traits::Zero;
-use std::ops::{Add, AddAssign, Mul};
-
 use crate::internal::*;
 use ndarray::prelude::*;
+use ndarray::LinalgScalar;
 
 use crate::ops::cnn::conv::KernelFormat;
 use crate::ops::cnn::Patch;
@@ -36,12 +34,12 @@ use tract_linalg::frame::mmm::{FusedSpec, MatMatMul};
  *              +--------------+  +----------------+
  */
 
-interfaces!(<T: Datum + Add + Mul + Zero + Copy> MatMat<T>: dyn InferenceOp, dyn TypedOp);
+interfaces!(<T: Datum + LinalgScalar> MatMat<T>: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct MatMat<T>
 where
-    T: Datum + Add + Mul + Zero + Copy,
+    T: Datum + LinalgScalar
 {
     pub patch: Patch,
     pub output_shape: DataShape,
@@ -57,7 +55,7 @@ where
 
 impl<T> MatMat<T>
 where
-    T: Datum + Add + Mul + Zero + Copy + AddAssign + ndarray::LinalgScalar,
+    T: Datum + LinalgScalar,
 {
     pub(super) fn conv_gemm<'i>(
         &'i self,
@@ -102,7 +100,7 @@ where
 
 impl<T> Op for MatMat<T>
 where
-    T: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<T> + PartialEq,
+    T: Datum + LinalgScalar
 {
     fn name(&self) -> Cow<str> {
         "MatMat".into()
@@ -172,7 +170,7 @@ where
 
 impl<T> StatelessOp for MatMat<T>
 where
-    T: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<T> + PartialEq,
+    T: Datum + LinalgScalar
 {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
@@ -183,7 +181,7 @@ where
 
 impl<T> TypedOp for MatMat<T>
 where
-    T: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<T> + PartialEq,
+    T: Datum + LinalgScalar
 {
     typed_op_as_op!();
 

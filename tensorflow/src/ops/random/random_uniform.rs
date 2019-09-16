@@ -21,6 +21,8 @@ pub fn random_uniform_int(
     Ok(Box::new(RandomUniformInt::new(dtype, seed, seed2)))
 }
 
+interfaces!(RandomUniform: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct RandomUniform {
     t: DatumType,
@@ -99,6 +101,8 @@ impl InferenceRulesOp for RandomUniform {
     }
 }
 
+interfaces!(TypedRandomUniform: dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct TypedRandomUniform {
     t: DatumType,
@@ -159,6 +163,8 @@ pub fn make_f32(shape: &[usize], seed1: u64, seed2: u64) -> TractResult<Arc<Tens
         Ok(tensor.into_arc_tensor())
     }
 }
+
+interfaces!(RandomUniformInt: dyn InferenceOp);
 
 #[derive(Debug, Clone, new)]
 pub struct RandomUniformInt {

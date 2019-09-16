@@ -1,6 +1,6 @@
 use crate::internal::*;
 use ndarray::prelude::*;
-use num_traits::Float;
+use num_traits::{ Float, FromPrimitive };
 use std::iter::Sum;
 
 use crate::ops::cnn::pools::PoolSpec;
@@ -18,7 +18,7 @@ pub struct AvgPool {
 }
 
 impl AvgPool {
-    fn to_fixed<T: Datum + Float + Sum>(
+    fn to_fixed<T: Datum + Float + Sum + FromPrimitive>(
         &self,
         input_shape: &[usize],
     ) -> TractResult<Box<dyn TypedOp>>
@@ -98,10 +98,10 @@ impl TypedOp for AvgPool {
     }
 }
 
-interfaces!(<T: Datum + Float + Sum> AvgPoolFixed<T>: dyn TypedOp);
+interfaces!(<T: Datum + Float + Sum + FromPrimitive> AvgPoolFixed<T>: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
-pub struct AvgPoolFixed<T: Datum + Float + Sum> {
+pub struct AvgPoolFixed<T: Datum + Float + Sum + FromPrimitive> {
     patch: Patch,
     input_shape: DataShape,
     output_shape: DataShape,
@@ -109,7 +109,7 @@ pub struct AvgPoolFixed<T: Datum + Float + Sum> {
     _casper: PhantomData<T>,
 }
 
-impl<T: Datum + Float + Sum> Op for AvgPoolFixed<T> {
+impl<T: Datum + Float + Sum + FromPrimitive> Op for AvgPoolFixed<T> {
     fn name(&self) -> Cow<str> {
         format!("AvgPool::Fixed<{:?}>", T::datum_type()).into()
     }
@@ -117,7 +117,7 @@ impl<T: Datum + Float + Sum> Op for AvgPoolFixed<T> {
     op_as_typed_op!();
 }
 
-impl<T: Datum + Float + Sum> StatelessOp for AvgPoolFixed<T> {
+impl<T: Datum + Float + Sum + FromPrimitive> StatelessOp for AvgPoolFixed<T> {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
         let input: ArrayViewD<T> = input.to_array_view()?;
@@ -131,7 +131,8 @@ impl<T: Datum + Float + Sum> StatelessOp for AvgPoolFixed<T> {
                 } else {
                     visitor.valid_count()
                 };
-                let div = div.as_().recip();
+                let div:T = T::from_usize(div).unwrap();
+                let div = div.recip();
                 for n in 0..*self.input_shape.n() {
                     let input_offset = self.input_shape.n_stride() * n;
                     let output_offset = self.output_shape.n_stride() * n;
@@ -154,7 +155,7 @@ impl<T: Datum + Float + Sum> StatelessOp for AvgPoolFixed<T> {
     }
 }
 
-impl<T: Datum + Float + Sum> TypedOp for AvgPoolFixed<T>
+impl<T: Datum + Float + Sum + FromPrimitive> TypedOp for AvgPoolFixed<T>
 {
     typed_op_as_op!();
 

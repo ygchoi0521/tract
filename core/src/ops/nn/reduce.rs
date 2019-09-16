@@ -182,7 +182,7 @@ where
     v.fold(T::zero(), |acc, &v| acc + v * v)
 }
 
-interfaces!(Reduce: dyn InferenceOp, dyn TypedOp);
+interfaces!(Reduce: dyn InferenceOp);
 
 #[derive(Clone, Debug, new)]
 pub struct Reduce {
@@ -320,7 +320,7 @@ impl InferenceRulesOp for Reduce {
     }
 }
 
-interfaces!(TypedReduce: dyn InferenceOp, dyn TypedOp);
+interfaces!(TypedReduce: dyn TypedOp);
 
 #[derive(Clone, Debug, new)]
 pub struct TypedReduce {

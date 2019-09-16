@@ -8,6 +8,8 @@ pub fn fused_batch_norm(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<
     Ok(Box::new(FusedBatchNorm::new(epsilon)))
 }
 
+interfaces!(FusedBatchNorm: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 struct FusedBatchNorm {
     epsilon: f32,

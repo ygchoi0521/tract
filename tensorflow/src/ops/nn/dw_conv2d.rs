@@ -15,6 +15,8 @@ pub fn depthwise_conv2d(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<
     Ok(Box::new(DepthwiseConv2d::new(data_format, padding, strides, dilations)))
 }
 
+interfaces!(DepthwiseConv2d: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Debug, Clone, new)]
 pub struct DepthwiseConv2d {
     data_format: DataFormat,

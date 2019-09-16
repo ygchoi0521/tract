@@ -41,6 +41,8 @@ impl OpState for VariableV2State {
     }
 }
 
+interfaces!(VariableV2: dyn InferenceOp, dyn TypedOp);
+
 #[derive(Clone, Debug, new)]
 pub struct VariableV2 {
     container: Option<String>,
@@ -105,6 +107,8 @@ impl TypedOp for VariableV2 {
 // eval-ed() in Stateless context
 #[derive(Clone, Debug, new)]
 struct AssignState;
+
+interfaces!(Assign: dyn InferenceOp, dyn TypedOp);
 
 #[derive(Clone, Debug, new, Default)]
 pub struct Assign {

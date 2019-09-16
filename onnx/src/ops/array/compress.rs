@@ -9,6 +9,8 @@ pub fn compress(
     Ok((Box::new(Compress::new(node.get_attr_opt("axis")?)), vec![]))
 }
 
+interfaces!(Compress: dyn InferenceOp);
+
 #[derive(Debug, Clone, new, Default)]
 pub struct Compress {
     axis: Option<usize>,

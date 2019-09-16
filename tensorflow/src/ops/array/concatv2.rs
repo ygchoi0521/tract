@@ -10,6 +10,8 @@ pub fn build(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<dyn Inferen
     Ok(boxed_new!(ConcatV2(t)(n, tidx)))
 }
 
+interfaces!(<T: Copy + Datum> ConcatV2<T>: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct ConcatV2<T: Copy + Datum> {
     n: usize,

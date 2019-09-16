@@ -37,6 +37,8 @@ pub fn lstm(
     Ok((Box::new(lstm), vec![]))
 }
 
+interfaces!(LSTM: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct LSTM {
     pub optional_bias_input: Option<usize>,

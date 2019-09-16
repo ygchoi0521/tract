@@ -10,6 +10,9 @@ pub fn build(_ctx: &ParsingContext, pb: &NodeDef) -> TractResult<Box<dyn Inferen
     Ok(Box::new(StridedSlice::new(begin_mask, end_mask, shrink_axis_mask)))
 }
 
+
+interfaces!(StridedSlice: dyn InferenceOp);
+
 #[derive(Debug, Default, Clone, new)]
 pub struct StridedSlice {
     begin_mask: i64,

@@ -4,6 +4,8 @@ use std::collections::BTreeMap;
 
 use tract_core::internal::*;
 
+interfaces!(Memory: dyn InferenceOp);
+
 #[derive(Clone, Debug, new)]
 pub struct Memory {
     pub name: String,

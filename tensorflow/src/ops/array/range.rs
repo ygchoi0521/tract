@@ -5,6 +5,8 @@ use num_traits::AsPrimitive;
 use std::ops::{Add, Div, Mul, Sub};
 use tract_core::internal::*;
 
+interfaces!(Range: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Range {
     dtype: DatumType,

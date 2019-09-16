@@ -1,8 +1,6 @@
-use num_traits::Zero;
-use std::ops::{Add, AddAssign, Mul};
-
 use crate::internal::*;
 use ndarray::prelude::*;
+use ndarray::LinalgScalar;
 
 use crate::ops::cnn::conv::KernelFormat;
 use crate::ops::cnn::Patch;
@@ -10,12 +8,12 @@ use crate::ops::nn::{DataFormat, DataShape};
 
 use tract_linalg::vecmatmul::VecMatMul;
 
-interfaces!(<T: Datum + Add + Mul + Zero + Copy> VecMat<T>: dyn TypedOp);
+interfaces!(<T: Datum + LinalgScalar + FloatLike> VecMat<T>: dyn TypedOp);
 
 #[derive(Debug, Clone, new)]
 pub struct VecMat<T>
 where
-    T: Datum + Add + Mul + Zero + Copy,
+    T: Datum + LinalgScalar
 {
     pub patch: Patch,
     pub output_shape: DataShape,
@@ -29,7 +27,7 @@ where
 
 impl<T> VecMat<T>
 where
-    T: Datum + Add + Mul + Zero + Copy + AddAssign + ndarray::LinalgScalar,
+    T: Datum + LinalgScalar + FloatLike,
 {
     pub(super) fn conv_gemm<'i>(
         &'i self,
@@ -72,7 +70,7 @@ where
 
 impl<D> Op for VecMat<D>
 where
-    D: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<D> + PartialEq,
+    D: Datum + LinalgScalar + FloatLike
 {
     fn name(&self) -> Cow<str> {
         "VecMat".into()
@@ -92,7 +90,7 @@ where
 
 impl<D> StatelessOp for VecMat<D>
 where
-    D: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<D> + PartialEq,
+    D: Datum + LinalgScalar + FloatLike
 {
     fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
@@ -103,7 +101,7 @@ where
 
 impl<D> TypedOp for VecMat<D>
 where
-    D: Datum + Clone + ::ndarray::LinalgScalar + ::std::ops::AddAssign<D> + PartialEq,
+    D: Datum + LinalgScalar + FloatLike
 {
     typed_op_as_op!();
 

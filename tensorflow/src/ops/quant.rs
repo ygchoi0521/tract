@@ -17,6 +17,8 @@ fn fake_quant_with_min_max_vars(
     Ok(Box::new(FakeQuantWithMinMaxVars::new(narrow_range, num_bits)))
 }
 
+interfaces!(FakeQuantWithMinMaxVars: dyn InferenceOp);
+
 #[derive(Clone, Debug, new)]
 struct FakeQuantWithMinMaxVars {
     narrow_range: bool,

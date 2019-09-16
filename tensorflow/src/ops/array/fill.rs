@@ -2,6 +2,8 @@ use crate::model::ParsingContext;
 use crate::tfpb::node_def::NodeDef;
 use tract_core::internal::*;
 
+interfaces!(Fill: dyn InferenceOp);
+
 #[derive(Debug, Clone, new)]
 pub struct Fill {
     dt: DatumType,
