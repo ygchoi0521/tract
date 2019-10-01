@@ -4,28 +4,27 @@ This branch holds my notes, not code.
 
 These are personal notes, take everything here with a grain of salt. -- Kali
 
-## Epic: Kaldi acoustic model runner
+## Epic: Kaldi acoustic model runner. (DONE. very satisafactory, not integrated)
 
 ### Backlog: TODO
 
-* establish an AM RTF bench
-* declutter kaldi LSTM into scan + small pieces
-* propagate Downsample Op upstream
-* make Scan (and whatever else) pulse aware (-> stateful)
-* discover and apply concat/slice optimisation
-* improve mat*vec product (i presume LSTM will generate lots of them)
-* put test in CI
-* support inner networks profiling
+* optim discover and apply concat/slice optimisation, then push them out of scan
 
 ### Backlog: nice to have
 
+* establish an AM RTF bench: complex. hand-made measurement to 50% on a raspi 3b+
 * type the "incorporate" behaviour
-* declutter ONNX black box recs and maybe TF LSTM to Scan + small pieces
-* should Scan be rewritten in terms of Loop, Alloc, View, Assign ?
+* declutter TF LSTM to Scan + small pieces
+* should Scan be rewritten in terms of Loop, Alloc, View, Assign ? look at opset 11
 * optimize arithmetic noop (+0, *1 to generalize peepholes lstm op drops)
 
 ### Done
 
+* 2019-08 improve mat*vec product (i presume LSTM will generate lots of them)
+* 2019-09 support inner networks profiling
+* 2019-08 declutter kaldi LSTM into scan + small pieces
+* 2019-08 propagate Downsample Op upstream
+* 2019-08 make Scan (and whatever else) pulse aware (-> stateful)
 * 2019-07-11 We have a bunch of unit tests passing.
 
 * 2019-07-15 Refactored core to be able to manipulate models with commong api. Made dump recursive.
@@ -36,10 +35,9 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 
 ## Epic: Kaldi acoustic model runner, quantized
 
-* maybe start by f16, optimized on armv8 simd
-*
+### 
 
-## Epic: refactor linalg kernels
+## Epic: refactor linalg kernels. DONE
 
 * matmul and conv kernels in the shape of:
     * one linear stage (input + fma)
@@ -55,15 +53,16 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 
 ## Onnx
 
-* convert LSTM and GRU to scan
-* address the dynamic tensors issue
+* convert LSTM and GRU to scan (DONE)
+* address the dynamic tensors issue (really ?)
 
 ## Tensorflow
 
-* Convert LSTM to scan (the deepspeech form)
+* Convert BlockLSTM to scan
+* Convert arbitrary cells/nextiteration to scan
 
 ## Core improvements
 
-* draft a uniform, typed, declutterred operator set (and type it ?)
+* draft a uniform, typed, declutterred operator set (and type it ?) (ongoing)
 * Consecutive reshaping must go
 * noop reshaping must go
