@@ -35,7 +35,12 @@ These are personal notes, take everything here with a grain of salt. -- Kali
 
 ## Epic: Kaldi acoustic model runner, quantized
 
-### 
+* We chose to go the Onnx operator set 10 way.
+
+### Backlog
+
+* implement all quantized operations from opset 10
+
 
 ## Epic: refactor linalg kernels. DONE
 
