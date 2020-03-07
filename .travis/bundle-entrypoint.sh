@@ -124,7 +124,7 @@ kaldi_en_libri_real=`cat tract.out | grep real | cut -f 2 -d ' ' | sed 's/\([0-9
 echo net.kaldi_librispeech_clean_tdnn_lstm_1e_256.evaltime.pulse_240ms $kaldi_en_libri_real >> metrics
 
 $TRACT --machine-friendly \
-    $CACHEDIR/en_libri_real/model.onnx \
+    $CACHEDIR/mdl-en-2019-12-24-aho-corasick-18h01m33s.onnx \
     -O --output-node output -i 264x40 profile --bench \
     > tract.out
 v=`cat tract.out | grep real | cut -f 2 -d ' ' | sed 's/\([0-9]\{9,9\}\)[0-9]*/\1/'`
@@ -136,6 +136,13 @@ $TRACT --machine-friendly \
     > tract.out
 v=`cat tract.out | grep real | cut -f 2 -d ' ' | sed 's/\([0-9]\{9,9\}\)[0-9]*/\1/'`
 echo net.mdl-en-2019-Q3-librispeech_onnx.evaltime.pulse_240ms $v >> metrics
+
+$TRACT --machine-friendly \
+    $CACHEDIR/mdl-en-2019-12-24-aho-corasick-18h01m33s.onnx \
+    -O --output-node output -i Sx40 --pulse 24 profile --bench \
+    > tract.out
+v=`cat tract.out | grep real | cut -f 2 -d ' ' | sed 's/\([0-9]\{9,9\}\)[0-9]*/\1/'`
+echo net.mdl-en-2019-12-24-aho-corasick.evaltime.pulse_240ms $v >> metrics
 
 $TRACT --machine-friendly \
     $CACHEDIR/en_tdnn_lstm_bn_q7/model.onnx \
