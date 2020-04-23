@@ -132,10 +132,10 @@ case "$PLATFORM" in
 
         $SUDO apt-get -y install binutils-$DEBIAN_TRIPLE gcc-$DEBIAN_TRIPLE qemu-system-arm qemu-user libssl-dev pkg-config
         rustup target add $RUSTC_TRIPLE
-        cargo dinghy --platform $PLATFORM test --release -p tract-linalg $DINGHY_TEST_ARGS -- --nocapture
-        cargo dinghy --platform $PLATFORM test --release -p tract-core $DINGHY_TEST_ARGS
+#        cargo dinghy --platform $PLATFORM test --release -p tract-linalg $DINGHY_TEST_ARGS -- --nocapture
+#        cargo dinghy --platform $PLATFORM test --release -p tract-core $DINGHY_TEST_ARGS
         cargo dinghy --platform $PLATFORM build --release -p tract -p example-tensorflow-mobilenet-v2
-        cargo dinghy --platform $PLATFORM bench --no-run -p tract-linalg
+#        cargo dinghy --platform $PLATFORM bench --no-run -p tract-linalg
     ;;
     *)
 esac
