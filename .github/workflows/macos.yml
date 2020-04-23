@@ -1,7 +1,7 @@
 name: Native MacOS
 
-on:
-  push:
+# on:
+#   push:
 
 jobs:
   macos:
