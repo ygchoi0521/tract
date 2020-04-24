@@ -15,6 +15,7 @@ which rustup || curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 rustc --version
 
+$SUDO apt-get -y update
 $SUDO apt-get -y install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu libssl-dev pkg-config
 rustup target add aarch64-unknown-linux-gnu-gcc
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
