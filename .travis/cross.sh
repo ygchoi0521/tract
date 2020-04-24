@@ -139,7 +139,7 @@ case "$PLATFORM" in
 #        cargo dinghy --platform $PLATFORM test --release -p onnx-test-suite --no-run BUILDS
 #        cargo dinghy --platform $PLATFORM test -p tract BUILDS
 
-        cargo dinghy --platform $PLATFORM build --release -p tract --no-default-features --features onnx
+        (cd cli; cargo dinghy --platform $PLATFORM build --release --no-default-features --features onnx)
     ;;
     *)
 esac
