@@ -25,13 +25,11 @@ fn main() -> TractResult<()> {
 */
 
 use tract_core::prelude::*;
+use tract_core::ops::StatefullOp;
 
 fn main() -> TractResult<()> {
-    let mut model = TypedModel::default();
-    let s = model.add_source("source", TypedFact::dt_shape(DatumType::F64, [1usize, 1].as_ref())?)?;
-    model.wire_node("pool", tract_core::ops::nn::GlobalLpPool::default(), &[s])?;
-    let plan = SimplePlan::new(model)?;
-    let result = plan.run(tvec!(tensor2(&[[1.0f64, 2.0]])))?;
+    let op = tract_core::ops::nn::GlobalLpPool::default();
+    let result = op.as_stateless().unwrap().eval(tvec!(rctensor2(&[[1.0f64, 2.0]])))?;
     println!("{:?}", result);
     Ok(())
 }
