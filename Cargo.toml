@@ -8,6 +8,7 @@ members = [
     "kaldi",
     "cli",
     "tc",
+    "tc/lib",
     "examples/tensorflow-mobilenet-v2",
     "examples/jupyter-keras-tract",
     "harness/core-proptest-pulse",

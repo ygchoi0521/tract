@@ -6,4 +6,5 @@ edition = "2018"
 
 [dependencies]
 tract-core = { path = "../core" }
+tclib = { path = "lib" }
 # tract-onnx = { path = "../onnx" }
