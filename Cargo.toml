@@ -7,6 +7,7 @@ members = [
     "onnx",
     "kaldi",
     "cli",
+    "tc",
     "examples/tensorflow-mobilenet-v2",
     "examples/jupyter-keras-tract",
     "harness/core-proptest-pulse",
@@ -17,8 +18,8 @@ members = [
     "harness/tf-moz-deepspeech",
 ]
 
-# [profile.release]
-# lto = true
-# 
-# [profile.bench]
-# debug = true
+[profile.release]
+lto = true
+
+[profile.bench]
+debug = true
