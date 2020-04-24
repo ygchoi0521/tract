@@ -17,8 +17,8 @@ members = [
     "harness/tf-moz-deepspeech",
 ]
 
-[profile.release]
-lto = true
-
-[profile.bench]
-debug = true
+# [profile.release]
+# lto = true
+# 
+# [profile.bench]
+# debug = true
