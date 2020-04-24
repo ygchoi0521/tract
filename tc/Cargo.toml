@@ -5,6 +5,5 @@ authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 edition = "2018"
 
 [dependencies]
-tract-core = { path = "../core" }
+ndarray = "0.13"
 tclib = { path = "lib" }
-# tract-onnx = { path = "../onnx" }

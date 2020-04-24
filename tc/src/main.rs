@@ -36,13 +36,11 @@ fn main() -> TractResult<()> {
 }
 */
 
-use tract_core::prelude::*;
 
-fn main() -> TractResult<()> {
+fn main() {
     let op = tclib::GlobalLpPool::default();
-    let result = op.eval_t(tract_ndarray::arr2(&[[1.0f64, 2.0]]).view().into_dyn())?;
+    let result = op.eval_t(ndarray::arr2(&[[1.0f64, 2.0]]).view().into_dyn());
     println!("{:?}", result);
-    Ok(())
 }
 
 /* NO BUG
