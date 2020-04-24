@@ -40,7 +40,7 @@ use tract_core::prelude::*;
 
 fn main() -> TractResult<()> {
     let op = tclib::GlobalLpPool::default();
-    let result = op.eval(tvec!(rctensor2(&[[1.0f64, 2.0]])))?;
+    let result = op.eval_t(tract_ndarray::arr2(&[[1.0f64, 2.0]]).view().into_dyn())?;
     println!("{:?}", result);
     Ok(())
 }

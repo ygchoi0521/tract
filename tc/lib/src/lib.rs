@@ -7,11 +7,10 @@ pub struct GlobalLpPool {
 }
 
 impl GlobalLpPool {
-    fn eval_t<D: Datum + tract_core::num_traits::Float>(
+    pub fn eval_t(
         &self,
-        input: Arc<Tensor>,
-        ) -> TractResult<TVec<Arc<Tensor>>> {
-        let array = input.to_array_view::<D>()?;
+        array: ArrayViewD<f64>,
+        ) -> TractResult<ArrayD<f64>> {
         let n = array.shape()[0];
         let c = array.shape()[1];
         let mut final_shape = array.shape().to_vec();
@@ -20,21 +19,23 @@ impl GlobalLpPool {
         }
         let divisor = array.len() / (n * c);
         let input = array.into_shape(((n * c), divisor))?;
-        let divisor = D::from(divisor).unwrap().recip();
+        let divisor = (divisor as f64).recip();
         let result = if self.p == 1 {
-            input.fold_axis(Axis(1), D::zero(), |&a, &b| a + b.abs()).map(|a| *a * divisor)
+            input.fold_axis(Axis(1), 0.0, |&a, &b| a + b.abs()).map(|a| *a * divisor)
         } else if self.p == 2 {
-            input.fold_axis(Axis(1), D::zero(), |&a, &b| a + b * b).map(|a| a.sqrt() * divisor)
+            input.fold_axis(Axis(1), 0.0, |&a, &b| a + b * b).map(|a| a.sqrt() * divisor)
         } else {
              input
-                .fold_axis(Axis(1), D::zero(), |&a, &b| a + b.abs().powi(self.p as i32))
-                .map(|a| a.powf(D::from(self.p).unwrap().recip()) * divisor)
+                .fold_axis(Axis(1), 0.0, |&a, &b| a + b.abs().powi(self.p as i32))
+                .map(|a| a.powf((self.p as f64).recip()) * divisor)
         };
-        Ok(tvec!(result.into_shape(final_shape)?.into_arc_tensor()))
+        Ok(result.into_dyn())
     }
 
+    /*
     pub fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
         dispatch_floatlike!(Self::eval_t(input.datum_type())(self, input))
     }
+    */
 }
