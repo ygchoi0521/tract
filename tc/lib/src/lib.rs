@@ -21,10 +21,15 @@ impl GlobalLpPool {
         let divisor = array.len() / (n * c);
         let input = array.into_shape(((n * c), divisor))?;
         let divisor = D::from(divisor).unwrap().recip();
-        let result =
-            input
-            .fold_axis(Axis(1), D::zero(), |&a, &b| a + b.abs().powi(self.p as i32))
-            .map(|a| a.powf(D::from(self.p).unwrap().recip()) * divisor);
+        let result = if self.p == 1 {
+            input.fold_axis(Axis(1), D::zero(), |&a, &b| a + b.abs()).map(|a| *a * divisor)
+        } else if self.p == 2 {
+            input.fold_axis(Axis(1), D::zero(), |&a, &b| a + b * b).map(|a| a.sqrt() * divisor)
+        } else {
+             input
+                .fold_axis(Axis(1), D::zero(), |&a, &b| a + b.abs().powi(self.p as i32))
+                .map(|a| a.powf(D::from(self.p).unwrap().recip()) * divisor)
+        };
         Ok(tvec!(result.into_shape(final_shape)?.into_arc_tensor()))
     }
 }
