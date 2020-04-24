@@ -24,11 +24,23 @@ fn main() -> TractResult<()> {
 }
 */
 
+/* BUG
 use tract_core::prelude::*;
 use tract_core::ops::StatefullOp;
 
 fn main() -> TractResult<()> {
     let op = tract_core::ops::nn::GlobalLpPool::default();
+    let result = op.as_stateless().unwrap().eval(tvec!(rctensor2(&[[1.0f64, 2.0]])))?;
+    println!("{:?}", result);
+    Ok(())
+}
+*/
+
+use tract_core::prelude::*;
+use tract_core::ops::StatefullOp;
+
+fn main() -> TractResult<()> {
+    let op = tclib::GlobalLpPool::default();
     let result = op.as_stateless().unwrap().eval(tvec!(rctensor2(&[[1.0f64, 2.0]])))?;
     println!("{:?}", result);
     Ok(())
