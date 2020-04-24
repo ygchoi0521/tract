@@ -134,7 +134,8 @@ case "$PLATFORM" in
         rustup target add $RUSTC_TRIPLE
 #        cargo dinghy --platform $PLATFORM test --release -p tract-linalg $DINGHY_TEST_ARGS -- --nocapture
 #        cargo dinghy --platform $PLATFORM test --release -p tract-core $DINGHY_TEST_ARGS
-        cargo dinghy --platform $PLATFORM build --release -p tract -p example-tensorflow-mobilenet-v2
+        cargo dinghy --platform $PLATFORM build --release -p tract-core
+        cargo dinghy --platform $PLATFORM build --release -p tract # -p example-tensorflow-mobilenet-v2
 #        cargo dinghy --platform $PLATFORM bench --no-run -p tract-linalg
     ;;
     *)
