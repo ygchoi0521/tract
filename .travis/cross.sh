@@ -10,6 +10,7 @@ then
 fi
 
 which rustup || curl https://sh.rustup.rs -sSf | sh -s -- -y
+rustup update
 
 . $HOME/.cargo/env
 
