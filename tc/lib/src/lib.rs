@@ -32,29 +32,9 @@ impl GlobalLpPool {
         };
         Ok(tvec!(result.into_shape(final_shape)?.into_arc_tensor()))
     }
-}
 
-impl Op for GlobalLpPool {
-    fn name(&self) -> Cow<str> {
-        "GlobalLpPool".into()
-    }
-    fn validation(&self) -> Validation {
-        Validation::Rounding
-    }
-    op_as_typed_op!();
-    not_a_pulsed_op!();
-}
-
-impl StatelessOp for GlobalLpPool {
-    fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
+    pub fn eval(&self, mut inputs: TVec<Arc<Tensor>>) -> TractResult<TVec<Arc<Tensor>>> {
         let input = args_1!(inputs);
         dispatch_floatlike!(Self::eval_t(input.datum_type())(self, input))
-    }
-}
-impl TypedOp for GlobalLpPool {
-    as_op!();
-
-    fn output_facts(&self, _inputs: &[&TypedFact]) -> TractResult<TVec<TypedFact>> {
-        todo!();
     }
 }

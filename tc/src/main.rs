@@ -37,11 +37,10 @@ fn main() -> TractResult<()> {
 */
 
 use tract_core::prelude::*;
-use tract_core::ops::StatefullOp;
 
 fn main() -> TractResult<()> {
     let op = tclib::GlobalLpPool::default();
-    let result = op.as_stateless().unwrap().eval(tvec!(rctensor2(&[[1.0f64, 2.0]])))?;
+    let result = op.eval(tvec!(rctensor2(&[[1.0f64, 2.0]])))?;
     println!("{:?}", result);
     Ok(())
 }
