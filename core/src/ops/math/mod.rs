@@ -1,7 +1,11 @@
+pub mod furiosa_functions;
+
 use crate::internal::*;
 use num_traits::{Float, Zero};
 
 use super::binary::*;
+
+use self::furiosa_functions::*;
 
 bin_to_super_type!(add, Add,
                    flip:commute,
@@ -209,7 +213,8 @@ element_wise!(abs, Abs, [f16, f32, i32] => |_, xs| {
 });
 
 element_wise!(exp, Exp, [f16, f32, f64] => |_, xs| {
-    xs.iter_mut().for_each(|x| *x = x.exp());
+    //xs.iter_mut().for_each(|x| *x = x.exp());
+    xs.iter_mut().for_each(|x| *x = x.furiosa_exp());
     Ok(())
 };
 validation: Validation::Rounding
